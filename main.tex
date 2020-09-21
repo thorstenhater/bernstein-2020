@@ -4,12 +4,48 @@
 \usetheme{JuelichPoster}
 
 \setbeamertemplate{partner1}{\includegraphics{img/cscs}}
+% TODO Add HBP and/or eBrains here
 
 \begin{document}
 \begin{frame}[t]
-  \frametitle{ \makebox[0.4\textwidth][l]{\includegraphics[width=\textwidth]{arbor-lines-proto-colour-full}}}
-   \framesubtitle{A morphologically detailed neural network simulation library for modern high performance computer architectures.\\
-  \tiny{Nora Abi Akar, Ben Cumming, Stuart Yates (CSCS); Thorsten Hater, Brent Huisman, Anne Küsters (Forschungszentrum Jülich)}}
+  \frametitle{\makebox[0.4\textwidth][l]{\includegraphics[width=\textwidth]{img/arbor-lines-proto-colour-full}}}
+  \framesubtitle{A morphologically detailed neural network simulation library for modern high performance computer architectures.\\
+    \tiny{Nora Abi Akar, Ben Cumming, Stuart Yates (CSCS); Thorsten Hater, Brent Huisman, Anne Küsters (Forschungszentrum Jülich)}}
+
+  \begin{columns}
+    \begin{column}{0.65\textwidth}
+  We present recent developments in Arbor, a library for the simulation of
+  morphologically detailled neurons and networks thereof. Arbor places strong
+  emphasis on performance, portability, and usability. It can exploit modern
+  architectures based on super-scalar multi-core processors and GPU accelerators.
+  We will showcase some of the features added to Arbor since the last release and
+  how they can used to almost directly import single cell models from the Allen
+  Brain Atlas database, specifically
+
+  \begin{itemize}
+    \item A DSL for defining sub-domains of the morphology
+    \item Support for mechanism catalogues
+    \item A catalogue of optimised mechanisms used in the Brain Atlas database
+    \item Improved handling of spherical somata
+  \end{itemize}
+
+  Finally, we validate these claims with a single cell model running in AllenSDK\@.
+  We reproduce results and achieve an eight-fold speed-up in simulation time over
+  the default AllenSDK NEURON backend.
+  In summary, Arbor is rapidly becoming a capable tool for neuroscientists that
+  offers excellent performance on modern hardware.
+\end{column}
+\begin{column}{0.3\textwidth}
+  \begin{block}{Where to find us}
+  \begin{description}
+    \item[Contact] arbor-sim@fz-juelich.de
+    \item[Source code] github.com/arbor-sim/arbor
+    \item[Documentation] arbor.readthedocs.io
+  \end{description}
+\end{block}
+\end{column}
+\end{columns}
+
 
   \begin{appendixblock}
     \begin{minipage}[c]{.48\linewidth}
@@ -19,13 +55,13 @@
     \hfill
     \begin{minipage}[c]{.48\linewidth}
       \begin{itemize}
-      \item Ceaque es asitis aut quo tem ime pore recae
-      \item Ceaque es asitis aut quo tem ime pore reca
+        \item Ceaque es asitis aut quo tem ime pore recae
+        \item Ceaque es asitis aut quo tem ime pore reca
         iduntiuntrepratu ritem. Nam es et ab is et estotas es repelit
-      \item sit abo. Nate nos ipsum fugitaque sandaerfere doleserio
+        \item sit abo. Nate nos ipsum fugitaque sandaerfere doleserio
         dolor aut et dolorroreium et ipsa dolut optatur aut ad quae
         enditatusam dolorei
-      \item Ceaque es asitis aut quo tem ime pore recae
+        \item Ceaque es asitis aut quo tem ime pore recae
         iduntiuntrepratu ritem. Nam es et ab is et estotas es repelit
       \end{itemize}
     \end{minipage}
@@ -82,13 +118,5 @@
       nimpero voluptibus, ium abo.
     \end{column}
   \end{columns}
-
-  \vspace*{1.5ex}
-
-  \structure{
-    \textbf{Contact:} arbor-sim@fz-juelich.de
-    \textbf{-}
-    \textbf{Website:} github.com/arbor-sim/arbor, arbor.readthedocs.io
-  }
 \end{frame}
 \end{document}
