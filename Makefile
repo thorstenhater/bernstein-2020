@@ -1,5 +1,7 @@
-LTX=pdflatex
+LTX=pdflatex -shell-escape
 SRC=main.tex
+
+all: main.pdf
 
 main.pdf: $(SRC) $(IMG)
 	$(LTX) $(SRC)

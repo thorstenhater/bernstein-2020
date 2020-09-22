@@ -1,13 +1,16 @@
 \documentclass{beamer}
 
-\usepackage[orientation=portrait,size=a1,scale=1.4]{beamerposter}
+\usepackage{minted}
+
+\usepackage[orientation=portrait,size=a1,scale=1.1
+]{beamerposter}
 \usetheme{JuelichPoster}
 
 \setbeamertemplate{partner1}{\includegraphics{img/cscs}}
 % TODO Add HBP and/or eBrains here
 
 \begin{document}
-\begin{frame}[t]
+\begin{frame}[t, fragile]
   \frametitle{\includegraphics[width=\linewidth]{img/arbor-lines-proto-colour-full}}
   \framesubtitle{A morphologically detailed neural network simulation library for modern high performance computer architectures.\\
     \tiny{Nora Abi Akar, Ben Cumming, Stuart Yates (CSCS); Thorsten Hater, Brent Huisman, Anne Küsters (Forschungszentrum Jülich)}}
@@ -21,8 +24,6 @@
       We will showcase some of the features added to Arbor since the last release and
       how they can used to almost directly import single cell models from the Allen
       Brain Atlas database.
-      We reproduce results and achieve an eight-fold speed-up in simulation time over
-      the default AllenSDK NEURON backend.
     \end{column}
     \begin{column}{0.3\textwidth}
       \begin{block}{Where to find us}
@@ -55,55 +56,39 @@
     \end{minipage}
   \end{appendixblock}
 
-  Magnimus ab ini tem quaspe vel ipic tem fuga. Pero beatese volor
-  andaectem velectio. Simus dolupta qui bea niate rernam, officimus
-  venet omnienderum renias aciis dolut delitat volupta aut videribero
-  iligent volorro magnatus, nis es ant dolestet laccabor simagnis
-  sunto tem ipsandi psapere mquidi sition nobit audam as es etur adia
-  audisit aspelese perumquamus.\\[1.5ex]
+  \textbf{\structure{Running an Allen Brain Atlas Model}}\\
 
+  We demonstrate how a model imported from the Brain Atlas database can be run using
+  Arbor almost directly\cite{atlas}.\\[1.5ex]
   \begin{columns}[onlytextwidth]
     \begin{column}{.49\linewidth}
-      \textbf{\structure{Pudaecae pratur?}}\\
-      e rovitaqui ad maion con consedi officte ssimolupta iliae
-      vernate deles quati ut officias sitate volumet eatempora peri
-      imini quiam ipsapidel ipsunt assedi officab orepero rrumqui
-      beribus ciisint iorectes as aut facipsam est, sint aut licipsa
-      ndaepta tempore preptatur rescia se audit, ommodia vollum quam
-      sequam et mo et volupti cone nimpero voluptibus, ium abo. Illor
-      aut ium alibus a ellab inctori busapel iduscillore expe cus mil
-      maios quaeritatur re magnatur alignimus.\\[1ex]
-
-      Os doluptati cum ut vitis sam eum eari id quos destius aut mo
-      tendipsame corerum quasimet officimaxim utaqui ullorem quia cus
-      sunt.\\[1ex]
-
-      Bitiorum volorem quas assim utemolu ptateni te ad quo etur sanda
-      dio. Ucium ute ium volorrumquia parum, quatas alia velendi bera
-      periam incienimo consed eum ut mi, qui quas magnam apita vel
-      ipsam quaeptae re eatem faceature eos aperspe nosandisquam ium
-      aut
+      \begin{enumerate}
+        \item build the geometry by loading a SWC structure from the download
+        \item assign labels to geometry
+        \item build a cell description from labels and geometry
+        \item parse the electro-physical properties supplied in the download and assign to regions
+        \begin{enumerate}
+          \item set physical properties: $T$, $V_{m}$, $R_{a}$, $C_{m}$
+          \item define ion dynamics reversal potentials
+        \end{enumerate}
+        \item Attach to the soma's center
+        \begin{enumerate}
+          \item current clamp; rectangular stimulus of $150\,pA$ from $200\,ms$ to $1200\,ms$
+          \item voltage probe; sampling with $200\,kHz$
+          \item spike detector; triggering at $V=-40\,mV$
+        \end{enumerate}
+        \item convert the cell description into a runnable simulation
+        \item declare that we will use a mechanism catalogue comprising
+        \begin{itemize}
+          \item the default mechanisms, prefixed by \texttt{default\_}
+          \item the Allen DB mechanisms
+        \end{itemize}
+        \item Finally, run the simulation for $1400\,ms$ with time step $\Delta t = 0.0005\,ms$
+      \end{enumerate}
+      \includegraphics{src/arbor.pdf}
     \end{column}
     \begin{column}{.49\linewidth}
-      anda conestium que ped maximus repel iur?\\[1ex]
-
-      Nihicid esti qui ilit, consect urepero il invera que suntem et
-      aut ra periatque sunt ex esectum autet ad quam, qui to idendae
-      il molupta sedit esciunda net re incto volorum aditat eatum
-      fuga. Idust, quas aut lam, int.\\[1ex]
-
-      Idis alis earcim nullor sunt voluptatur? Erunt landam, nihicate
-      prem corehent.\\[2ex]
-
-      \structure{Tempore sequiam facias repudi in prore}\\
-      Estio dolum dende nat.Em restes mint.\\
-      Ullam, con nat renihillat prat est et quae a con estruptatur?\\[1ex]
-
-      Hic to expelib eaturib erovitia conet laboreperore volupisque
-      eius, ime parum hil molorec aeperfe runtur arum quae sequam
-      excero idesed quatur sequas atenis aut ullaudit omnihicia venit
-      ommoluptia. Ommodia vollum quam sequam et mo et volupti cone
-      nimpero voluptibus, ium abo.
+      \inputminted{python}{src/model.py}
     \end{column}
   \end{columns}
 \end{frame}
