@@ -1,46 +1,40 @@
-import utils
-import arbor
+import utils, arbor as arb
 
-# read in geometry
-segment_tree = arbor.load_swc_allen('cell.swc', no_gaps=False) # (2)
-morphology = arbor.morphology(segment_tree)
-# assign names to regions defined by SWC (3) and center of soma (4)
-labels = arbor.label_dict({'soma': '(tag 1)', 'axon': '(tag 2)',
-                           'dend': '(tag 3)', 'apic': '(tag 4)',
-                           'center': '(location 0 0.5)'})
-cell = arbor.cable_cell(morphology, labels)
-# Discretisation: impose a maximum length per compartment of 20 um
-cell.compartments_length(20)
-# Attach stimulus and spike detector (4 a b)
-cell.place('center', arbor.iclamp(200, 1000, 0.15))
-cell.place('center', arbor.spike_detector(-40))
+# !\circled{1}! read in geometry
+segment_tree = arb.load_swc_allen('cell.swc', no_gaps=False)
+morphology = arb.morphology(segment_tree)
+# !\circled{2}! assign names to regions defined by SWC and center of soma
+labels = arb.label_dict({'soma': '(tag 1)', 'axon': '(tag 2)',
+                         'dend': '(tag 3)', 'apic': '(tag 4)',
+                         'center': '(location 0 0.5)'})
+cell = arb.cable_cell(morphology, labels) # !\circled{3}!
+cell.compartments_length(20) # Set discretisation via max .comparment length
 
-# Assign electro-physical parameters, loaded from Allen Brain Atlas (1)
-defaults, region_parameters, ions, mechanisms = utils.load_allen_fit('fit.json')
-# Set defaults
+# !\circled{4}! load and assign electro-physical parameters
+defaults, regions, ions, mechanisms = utils.load_allen_fit('fit.json')
+# Set defaults and override by region
 cell.set_properties(tempK=defaults.tempK, Vm=defaults.Vm,
                     cm=defaults.cm, rL=defaults.rL)
-# Override defaults by region (3 a)
-for region, vs in region_parameters:
+for region, vs in regions:
     cell.paint(region, tempK=vs.tempK, Vm=vs.Vm, cm=vs.cm, rL=vs.rL)
-# Set reversal potentials (3 b)
+# Set reversal potentials
 for region, ion, e in ions:
-    cell.paint(region, arbor.ion(ion, rev_pot=e))
-cell.set_ion('ca',
-             int_con=5e-5, ext_con=2.0,
-             method=arbor.mechanism('default_nernst/x=ca'))
-# Assign ion dynamics (3 b)
+    cell.paint(region, arb.ion(ion, rev_pot=e))
+cell.set_ion('ca', int_con=5e-5, ext_con=2.0,
+             method=arb.mechanism('default_nernst/x=ca'))
+# Assign ion dynamics
 for region, mech, values in mechanisms:
-    cell.paint(region, arbor.mechanism(mech, values))
+    cell.paint(region, arb.mechanism(mech, values))
+# !\circled{5}! Attach stimulus and spike detector
+cell.place('center', arb.iclamp(200, 1000, 0.15))
+cell.place('center', arb.spike_detector(-40))
 
-# Set up runnable simulation with mechanism catalogues default + allen
-model = arbor.single_cell_model(cell)
-catalogue = arbor.allen_catalogue()
-catalogue.extend(arbor.default_catalogue(), 'default_')
-model.properties.catalogue = catalogue
-# Attach voltage probe (4 c)
-model.probe('voltage', 'center', frequency=200000)
+# !\circled{6}! !\circled{7}! Set up runnable simulation
+model = arb.single_cell_model(cell)
+model.properties.catalogue = arb.allen_catalogue()
+model.properties.catalogue.extend(arb.default_catalogue(), 'default_')
+model.probe('voltage', 'center', frequency=200000) # !\circled{5}!
 
-# Run simulation and plot voltages + spikes
+# !\circled{8}! Run simulation and plot voltages + spikes
 model.run(tfinal=1400, dt=0.005)
 utils.plot_results(model)

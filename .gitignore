@@ -5,3 +5,8 @@
 *.toc
 *.snm
 /.auctex-auto/
+*.pygtex
+/.DS_Store
+*.vrb
+/_minted-main/
+/src/__pycache__/

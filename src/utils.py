@@ -69,14 +69,17 @@ def plot_results(model):
     import matplotlib.patches as patches
     import seaborn as sns
     import numpy as np
+    import pandas as pd
 
-    spikes   = model.spikes
-    times    = model.traces[0].time[:]
-    voltages = model.traces[0].value[:]
+    spikes    = np.array(model.spikes)
+    times     = np.array(model.traces[0].time[:])
+    voltages  = np.array(model.traces[0].value[:])
+    reference = pd.read_csv('nrn.csv')
 
     fg, ax = plt.subplots()
     ax.scatter(spikes, np.zeros_like(spikes) - 40, color=sns.color_palette()[1], zorder=20, label='Spike')
-    ax.plot(times, voltages, label='Potential')
+    ax.plot(times, voltages + 14.0, label='Arbor', zorder=15) # need to shift by junction potential, see allen db
+    ax.plot(reference['t/ms'], 1000.0*reference['U/mV'], label='Reference', color='0.4', ls='--', zorder=10) # neuron outputs V instead of mV
     ax.bar(200, 140, 1000, -120, align='edge', label='Stimulus', color='0.8')
     ax.set_xlabel('t/ms')
     ax.set_ylabel('U/mV')

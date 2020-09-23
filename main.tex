@@ -1,6 +1,10 @@
 \documentclass{beamer}
 
 \usepackage{minted}
+\usepackage{tikz}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill,inner sep=2pt] (char) {\textcolor{white}{#1}};}}
+
 
 \usepackage[orientation=portrait,size=a1,scale=1.1
 ]{beamerposter}
@@ -43,52 +47,55 @@
     \end{minipage}
     \hfill
     \begin{minipage}[c]{.48\linewidth}
-      \begin{itemize}
-        \item Ceaque es asitis aut quo tem ime pore recae
-        \item Ceaque es asitis aut quo tem ime pore reca
-        iduntiuntrepratu ritem. Nam es et ab is et estotas es repelit
-        \item sit abo. Nate nos ipsum fugitaque sandaerfere doleserio
-        dolor aut et dolorroreium et ipsa dolut optatur aut ad quae
-        enditatusam dolorei
-        \item Ceaque es asitis aut quo tem ime pore recae
-        iduntiuntrepratu ritem. Nam es et ab is et estotas es repelit
-      \end{itemize}
     \end{minipage}
   \end{appendixblock}
 
   \textbf{\structure{Running an Allen Brain Atlas Model}}\\
-
-  We demonstrate how a model imported from the Brain Atlas database can be run using
-  Arbor almost directly\cite{atlas}.\\[1.5ex]
   \begin{columns}[onlytextwidth]
     \begin{column}{.49\linewidth}
-      \begin{enumerate}
-        \item build the geometry by loading a SWC structure from the download
-        \item assign labels to geometry
-        \item build a cell description from labels and geometry
-        \item parse the electro-physical properties supplied in the download and assign to regions
-        \begin{enumerate}
+      The code snippet on the right is complete except the parsing and plotting
+      steps; it is available in full together with this poster at
+      \cite{my-source}. While the electro-physiological data is supplied as a
+      JSON file in all instances, the structure as some variation. Thus, the
+      parsing cannot be standardised. We comment on some of the important steps
+      \begin{itemize}
+        \item[\circled{1}] load SWC structure from the download
+        \item[\circled{2}] assign labels to geometry
+        \item[\circled{3}] build a cell description from labels and geometry
+        \item[\circled{4}] parse the electro-physiological properties supplied in the download and assign to regions
+        \begin{itemize}
           \item set physical properties: $T$, $V_{m}$, $R_{a}$, $C_{m}$
           \item define ion dynamics reversal potentials
-        \end{enumerate}
-        \item Attach to the soma's center
-        \begin{enumerate}
+        \end{itemize}
+        \item[\circled{5}] Attach to the soma's center
+        \begin{itemize}
           \item current clamp; rectangular stimulus of $150\,pA$ from $200\,ms$ to $1200\,ms$
           \item voltage probe; sampling with $200\,kHz$
           \item spike detector; triggering at $V=-40\,mV$
-        \end{enumerate}
-        \item convert the cell description into a runnable simulation
-        \item declare that we will use a mechanism catalogue comprising
-        \begin{itemize}
-          \item the default mechanisms, prefixed by \texttt{default\_}
-          \item the Allen DB mechanisms
         \end{itemize}
-        \item Finally, run the simulation for $1400\,ms$ with time step $\Delta t = 0.0005\,ms$
-      \end{enumerate}
-      \includegraphics{src/arbor.pdf}
+        \item[\circled{6}] convert the cell description into a runnable simulation
+        \item[\circled{7}] set mechanism catalogue comprising the defaults and Allen DB mechanisms.
+        \item[\circled{8}] run the simulation for $1400\,ms$ with time step $\Delta t = 0.0005\,ms$
+      \end{itemize}
+      \begin{figure}[H]
+        \centering
+        \includegraphics{src/arbor.pdf}
+        \label{fg:results}
+      \end{figure}
+      The reference solution was obtained using the allensdk Python package with
+      the default Neuron backend \cite{allensdk, neuron}. A minor modification
+      was made to suppress editing of the axon at load time of the geometric
+      information. For comparable simulations, we instead performed this
+      manipulation by hand once and stored the result in the SWC input. We
+      observe a minor deviation from the reference run, which is explained by
+      different discretisations.
+
+      The elapsed wall clock times for only the simulation steps are $14.7\,s$
+      with the code on the right and $121.8\,s$ for the reference solution;
+      yielding a speed-up of $8.25\times$ when using Arbor.
     \end{column}
     \begin{column}{.49\linewidth}
-      \inputminted{python}{src/model.py}
+      \inputminted[escapeinside=!!]{python}{src/model.py}
     \end{column}
   \end{columns}
 \end{frame}
