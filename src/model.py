@@ -8,7 +8,7 @@ labels = arb.label_dict({'soma': '(tag 1)', 'axon': '(tag 2)',
                          'dend': '(tag 3)', 'apic': '(tag 4)',
                          'center': '(location 0 0.5)'})
 cell = arb.cable_cell(morphology, labels) # !\circled{3}!
-cell.compartments_length(20) # Set discretisation via max .comparment length
+cell.compartments_length(20) # Set discretisation via max comparment length
 
 # !\circled{4}! load and assign electro-physical parameters
 defaults, regions, ions, mechanisms = utils.load_allen_fit('fit.json')
