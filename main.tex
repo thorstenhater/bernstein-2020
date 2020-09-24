@@ -21,12 +21,14 @@
   \begin{columns}
     \begin{column}{0.65\textwidth}
       We present recent developments in Arbor, a library for the simulation of
-      morphologically detailled neurons and networks thereof. Arbor places strong
-      emphasis on performance, portability, and usability. It can exploit modern
-      architectures based on super-scalar multi-core processors and GPU accelerators.
-      We will showcase some of the features added to Arbor since the last release and
-      how they can used to almost directly import single cell models from the Allen
-      Brain Atlas database.
+      morphologically detailled neurons and networks thereof. Arbor places
+      strong emphasis on performance, portability, and usability. It can exploit
+      modern architectures based on super-scalar multi-core processors and GPU
+      accelerators. We will showcase some of the features added to Arbor since
+      the last release and how they can used to almost directly import and run
+      single cell models from the Allen Brain Atlas database. These are
+      interesting, non-trivial model own their own, but more importantly form
+      the basis for the (V1 Model) network~\cite{allen-v1}.
     \end{column}
     \begin{column}{0.3\textwidth}
       \begin{block}{Where to find us}
@@ -54,16 +56,27 @@
       In particular we currently offer two catalogues, one, called
       \emph{default} comprising basic functionality, e.g.\ a passive leak and
       secondly the \emph{allen} catalogue which is a collection of mechanisms
-      obtained from the Brain Atlas\cite{Allen Mouse Brain Atlas}.
-      These have been heavily optimised, as they form the basis for the V1
-      network model \cite{Allen V1}.
+      obtained from the Brain Atlas\cite{Allen Mouse Brain Atlas}. We have
+      carefully optimised these, as they form the basis for the V1 network
+      model, which is quite resource intensive.
 
       Catalogues are built at compile time and can be accessed in the simulation
       to provide the mechanisms used in the respective model. Further, they can
-      be composed into compound catalogues, where name clashes are avoided via
-      an optional prefix.
+      be composed into larger catalogues, where name clashes are avoided via an
+      optional prefix.\\[1.5ex]
 
       \textbf{\structure{Spherical Somata}}\\
+      A common pattern appearing in SWC files is the appearance of a soma
+      consisting of a single point only. Up to the recent version, Arbor treated
+      these as sphere with the given radius. However, it is not possible to
+      resolve various ambiguities, e.g.\ where apical dendrites should be
+      attached. Consequently, the interpretation of single point somata has been
+      changed to a cylinder with the same surface area --- excluding caps --- as
+      the sphere with the given radius. As cable segments might no longer attach
+      directly to the surface, support for these detached segments was added. As
+      a by-product, this change significantly simplified the associated program
+      code. We offer specialised loaders for different flavours of SWC with
+      clear semantics for handling the soma.
     \end{column}
   \end{columns}
   \textbf{{\large\structure{Running an Allen Brain Atlas Model}}}\\
@@ -86,8 +99,12 @@
         \item[\circled{5}] Attach to the soma's center
         \begin{itemize}
           \item current clamp; rectangular stimulus of $150\,pA$ from $200\,ms$ to $1200\,ms$
-          \item voltage probe; sampling with $200\,kHz$
           \item spike detector; triggering at $V=-40\,mV$
+          \item voltage probe; sampling with $200\,kHz$
+          %\footnote{This is added to %NB: this screws up layout big time :(
+          %  the simulation, as it is a passive measurement device. Both spike
+          %  current clamps and detectors (via emitting events) potentially
+          %  change the model evolution.}
         \end{itemize}
         \item[\circled{6}] convert the cell description into a runnable simulation
         \item[\circled{7}] set mechanism catalogue comprising the defaults and Allen DB mechanisms.
@@ -127,7 +144,7 @@
       This research has received funding from the European Union's Horizon 2020
       Framework Programme for Research and Innovation under the Specific Grant
       Agreement No. 720270 (HBP SGA1), Specific Grant Agreement No. 785907 (HBP
-      SGA2), and Specific Grant Agreement No. 945539 (HBP SGA3).
+      SGA2), and Specific Grant Agreement No. 945539 (HBP SGA3).\\[1.5ex]
       
       \textbf{\structure{References}}\\
     \end{column}

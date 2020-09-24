@@ -85,5 +85,5 @@ def plot_results(model):
     ax.set_ylabel('U/mV')
     ax.set_xlim(left=0, right=1400)
     ax.set_ylim(top=20, bottom=-100)
-    ax.legend(loc='best')
+    ax.legend(loc='upper left', bbox_to_anchor=(1.05, 1))
     plt.savefig("arbor.pdf", bbox_inches='tight')
