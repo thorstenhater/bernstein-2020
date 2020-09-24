@@ -1,13 +1,21 @@
 \documentclass{beamer}
 
+\usepackage[style=numeric,maxnames=2]{biblatex}
 \usepackage{minted}
 \usepackage{tikz}
 
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill,inner sep=2pt] (char) {\textcolor{white}{#1}};}} % chktex 36
 
-
 \usepackage[orientation=portrait,size=a1,scale=1.0]{beamerposter}
 \usetheme{JuelichPoster}
+
+\ExecuteBibliographyOptions{%
+  sorting=nyt,
+  bibwarn=true,
+  isbn=false, %keine isbn anzeigen
+  url=true %keine url anzeigen
+}
+\addbibresource{references.bib}
 
 \setbeamertemplate{partner1}{\includegraphics{img/cscs}}
 % TODO Add HBP and/or eBrains here
@@ -21,12 +29,12 @@
   \begin{columns}
     \begin{column}{0.65\textwidth}
       We present recent developments in Arbor, a library for the simulation of
-      morphologically detailled neurons and networks thereof. Arbor places
-      strong emphasis on performance, portability, and usability. It can exploit
-      modern architectures based on super-scalar multi-core processors and GPU
-      accelerators. We will showcase some of the features added to Arbor since
-      the last release and how they can used to almost directly import and run
-      single cell models from the Allen Brain Atlas database. These are
+      morphologically detailled neurons and networks thereof~\cite{arbor}. Arbor
+      places strong emphasis on performance, portability, and usability. It can
+      exploit modern architectures based on super-scalar multi-core processors
+      and GPU accelerators. We will showcase some of the features added to Arbor
+      since the last release and how they can used to almost directly import and
+      run single cell models from the Allen Brain Atlas database. These are
       interesting, non-trivial model own their own, but more importantly form
       the basis for the (V1 Model) network~\cite{allen-v1}.
     \end{column}
@@ -56,7 +64,7 @@
       In particular we currently offer two catalogues, one, called
       \emph{default} comprising basic functionality, e.g.\ a passive leak and
       secondly the \emph{allen} catalogue which is a collection of mechanisms
-      obtained from the Brain Atlas\cite{Allen Mouse Brain Atlas}. We have
+      obtained from the Brain Atlas\cite{mouse-atlas}. We have
       carefully optimised these, as they form the basis for the V1 network
       model, which is quite resource intensive.
 
@@ -94,7 +102,7 @@
         \item[\circled{4}] parse the electro-physiological properties supplied in the download and assign to regions
         \begin{itemize}
           \item set physical properties: $T$, $V_{m}$, $R_{a}$, $C_{m}$
-          \item define ion dynamics reversal potentials
+          \item define ion dynamics and reversal potentials
         \end{itemize}
         \item[\circled{5}] Attach to the soma's center
         \begin{itemize}
@@ -115,7 +123,7 @@
         \includegraphics{src/arbor.pdf}
       \end{figure}
       The reference solution was obtained using the allensdk Python package with
-      the default Neuron backend~\cite{allensdk, neuron}. A minor modification
+      the default Neuron backend~\cite{neuron}. A minor modification
       was made to suppress editing of the axon at load time of the geometric
       information. For comparable simulations, we instead performed this
       manipulation by hand once and stored the result in the SWC input. We
@@ -133,20 +141,17 @@
   \vspace*{5ex}
   \begin{columns}[onlytextwidth]
     \begin{column}{.49\linewidth}
-      \textbf{\structure{Outlook}}\\
-      \begin{itemize}
-        \item Running V1 network model: This is the groundwork.
-        \item SONATA
-      \end{itemize}
-    \end{column}
-    \begin{column}{.49\linewidth}
+      \textbf{\structure{Conclusion and Outlook}}\\
+
       \textbf{\structure{Acknowledgements}}\\
       This research has received funding from the European Union's Horizon 2020
       Framework Programme for Research and Innovation under the Specific Grant
       Agreement No.\,720270 (HBP SGA1), Specific Grant Agreement No.\,785907 (HBP
       SGA2), and Specific Grant Agreement No.\,945539 (HBP SGA3).\\[1.5ex]
-      
+    \end{column}
+    \begin{column}{.49\linewidth}
       \textbf{\structure{References}}\\
+      \printbibliography{}
     \end{column}
   \end{columns}
 \end{frame}

@@ -10,3 +10,7 @@
 *.vrb
 /_minted-main/
 /src/__pycache__/
+*.bbl
+*.bcf
+*.blg
+/main.run.xml
