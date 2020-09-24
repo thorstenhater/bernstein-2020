@@ -42,7 +42,7 @@ def load_allen_fit(fit):
             else:
                 raise Exception(f"Illegal combination {mech} {name}")
         if mech == 'pas':
-            mech = 'default_pas'
+            mech = 'pas'
         mechs[(region, mech)][name] = value
 
     param = [(r, vs) for r, vs in param.items()]
