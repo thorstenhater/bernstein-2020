@@ -32,11 +32,12 @@
       morphologically detailled neurons and networks thereof~\cite{arbor}. Arbor
       places strong emphasis on performance, portability, and usability. It can
       exploit modern architectures based on super-scalar multi-core processors
-      and GPU accelerators. We will showcase some of the features added to Arbor
+      and GPU accelerators. We showcase some of the features added to Arbor
       since the last release and how they can used to almost directly import and
       run single cell models from the Allen Brain Atlas database. These are
-      interesting, non-trivial model own their own, but more importantly form
-      the basis for the (V1 Model) network~\cite{allen-v1}.
+      interesting, non-trivial models on their own, but more importantly form
+      the basis for a set of models for the mouse primary visual cortex
+      network~\cite{allen-v1}.
     \end{column}
     \begin{column}{0.3\textwidth}
       \begin{block}{Where to find us}
@@ -88,13 +89,12 @@
       In particular we currently offer two catalogues, one, called
       \emph{default} comprising basic functionality, e.g.\ a passive leak and
       secondly the \emph{allen} catalogue which is a collection of mechanisms
-      obtained from the Brain Atlas\cite{mouse-atlas}. We have
-      carefully optimised these, as they form the basis for the V1 network
-      model, which is quite resource intensive.
-
-      Catalogues are built at compile time and can be accessed in the simulation
-      to provide the mechanisms used in the respective model. Further, they can
-      be composed into larger catalogues, where name clashes are avoided via an
+      obtained from the Brain Atlas\cite{mouse-atlas}. We have carefully
+      optimised these, as they form the basis for the V1 network model, which is
+      quite resource intensive. Catalogues are built at compile time and can be
+      accessed in the simulation to provide the mechanisms used in the
+      respective model. Further, they can be composed into larger catalogues,
+      where name clashes are avoided via an
       optional prefix.\\[1.5ex]
 
       \textbf{\structure{Spherical Somata}}\\
@@ -165,6 +165,17 @@
   \begin{columns}[onlytextwidth]
     \begin{column}{.49\linewidth}
       \textbf{\structure{Conclusion and Outlook}}\\
+      The status quo shows that Arbor is a capable, ergonomic and highly
+      performant tool for building simulations of bio-physically detailled
+      neurons.
+
+      We are working actively to further improve Arbor:
+      \begin{itemize}
+        \item support for computation of local field potentials (LFP)
+        \item coupling with other simulators such as Nest
+        \item support for NeuroML and Neurolucida cell descriptions
+        \item streamlined NMODL mechanism integration without re-compilation
+      \end{itemize}
 
       \textbf{\structure{Acknowledgements}}\\
       This research has received funding from the European Union's Horizon 2020
