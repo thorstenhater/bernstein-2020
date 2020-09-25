@@ -4,6 +4,10 @@
 \usepackage{minted}
 \usepackage{tikz}
 
+\definecolor{lightgray}{gray}{0.9}
+\definecolor{lightred}{HTML}{ffc2c2}
+\definecolor{mediumslateblue}{HTML}{7B68EE}
+
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill,inner sep=2pt] (char) {\textcolor{white}{#1}};}} % chktex 36
 
 \usepackage[orientation=portrait,size=a1,scale=1.0]{beamerposter}
@@ -52,33 +56,54 @@
   \end{columns}
   \vspace*{5ex}
   \textbf{{\large\structure{New Features}}}\\
-  \begin{columns}[onlytextwidth]
-    \begin{column}{.49\linewidth}
-      \textbf{\structure{Morphology}}\\
+  
+  \textbf{\structure{Morphology}}\\
       Arbor provides a domain specific language (DSL) for describing regions and locations on morphologies, and a dictionary for associating these descriptions with a string label. The labels are used to refer to regions and locations when setting cell properties and attributes. For example, the membrane capacitance on a region of the cell membrane, or the location of synapse instances.
       \newline
       
       \begin{columns}
-        \begin{column}{0.44\textwidth}
-          We have a cell with a soma (red), axon (grey) and dendrite (blue). Arbor will keep track and number the branches of the cells you give it (furthest right). Branch 1 tapers from 0.4 to 0.2 $\mu$m and branch 2 has a constant radius of 0.5 $\mu$m.
+        \begin{column}{0.49\textwidth}
+          \circled{1} We're loading a 10 segment cell from an \emph{.swc} file. In this file, segments are tagged 1, 2 or 3 which correspond the soma (red), an axon (grey) and a dendrite (blue). Arbor let's us label these regions as follows:
+\begin{minted}[bgcolor=lightgray,breaklines]{python}
+labels = arb.label_dict({
+'soma': '(tag 1)',
+'axon': '(tag 2)',
+'dend': '(tag 3)'})
+\end{minted}
         \end{column}
-        \begin{column}{0.55\textwidth}
-        \includegraphics[width=\linewidth]{scripts/morph_branches.pdf}
+        \begin{column}{0.49\textwidth}
+          \circled{2} Arbor will keep number the branches of the cells automatically. In Arbor a branch is a region between branching points, starting at the proximal point {\color{red}\circled{-}} of the first segment (usually the soma). For this cell, Arbor generates {\color{mediumslateblue}\circled{6}} branches.
+          
+          In this cell, branch 1 tapers from 0.4 to 0.2 $\mu$m and branch 2 has a constant radius of 0.5 $\mu$m. Let's take two points {\color{black}\circled{-}} on the dendrite: one 80\% along branch 1 and the other 30\% along branch 2.
         \end{column}
       \end{columns}
       
       \begin{columns}
-        \begin{column}{0.44\textwidth}
-          You have two points (black) on the dendrite (80\% along branch 1, 20\% along branch 2) which constrain an interval from the proximal point of the soma (red) where you want to place specific dynamics. In Arbor, you can access this region by creating a label for the following region:
-            \begin{minted}[]{lisp}
-            (proximal_interval (sum (location 1 0.8) (location 2 0.3)))
-            \end{minted}
+        \begin{column}{0.49\textwidth}
+          \begin{center}\includegraphics[width=0.5\linewidth]{scripts/morph.pdf}\end{center}
         \end{column}
-        \begin{column}{0.55\textwidth}
-        \includegraphics[width=\linewidth]{scripts/points_region.pdf}
+        \begin{column}{0.49\textwidth}
+          \begin{center}\includegraphics[width=0.5\linewidth]{scripts/branches.pdf}\end{center}
         \end{column}
       \end{columns}
-    \end{column}
+      
+      \begin{columns}
+        \begin{column}{0.49\textwidth}
+          \circled{3} The two points {\color{black}\circled{-}} and the proximal point of the soma {\color{red}\circled{-}} constrain an interval where we want to place specific dynamics. In Arbor, we can access this region by creating a label for the following region:
+\begin{minted}[bgcolor=lightgray,breaklines]{python}
+labels['roi'] = '(proximal_interval (sum (location 1 0.8) (location 2 0.3)))'
+\end{minted}
+          Later, we could tell Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' regio:
+\begin{minted}[bgcolor=lightgray,breaklines]{python}
+cell.paint('roi', 'hh')
+\end{minted}
+        \end{column}
+        \begin{column}{0.49\textwidth}
+          \begin{center}\includegraphics[width=0.5\linewidth]{scripts/region.pdf}\end{center}
+        \end{column}
+      \end{columns}
+  
+  \begin{columns}[onlytextwidth]
     \begin{column}{.49\linewidth}
       \textbf{\structure{Mechanism Catalogues}}\\
       We provide an interface to collections of \emph{mechanisms} which describe
@@ -96,7 +121,8 @@
       respective model. Further, they can be composed into larger catalogues,
       where name clashes are avoided via an
       optional prefix.\\[1.5ex]
-
+    \end{column}
+    \begin{column}{.49\linewidth}
       \textbf{\structure{Spherical Somata}}\\
       A common pattern appearing in SWC files is the appearance of a soma
       consisting of a single point only. Up to the recent version, Arbor treated
@@ -108,7 +134,7 @@
       directly to the surface, support for these detached segments was added. As
       a by-product, this change significantly simplified the associated program
       code. We offer specialised loaders for different flavours of SWC with
-      clear semantics for handling the soma.
+      clear semantics for handling the soma.\\[1.5ex]
     \end{column}
   \end{columns}
   \textbf{{\large\structure{Running an Allen Brain Atlas Model}}}\\
@@ -158,7 +184,7 @@
       yielding a speed-up of $8.25\times$ when using Arbor.
     \end{column}
     \begin{column}{.49\linewidth}
-      \inputminted[escapeinside=!!]{python}{src/model.py}
+      \inputminted[bgcolor=lightgray,escapeinside=!!]{python}{src/model.py}
     \end{column}
   \end{columns}
   \vspace*{5ex}
