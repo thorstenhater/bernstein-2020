@@ -32,7 +32,7 @@
   \begin{columns}[onlytextwidth,T]
     \begin{column}{0.65\textwidth}
       We present recent developments in Arbor, a library for the simulation of
-      morphologically detailled neurons and networks thereof~\cite{arbor}. Arbor
+      morphologically detailed neurons and networks thereof~\cite{arbor}. Arbor
       places strong emphasis on performance, portability, and usability. It can
       exploit modern architectures based on super-scalar multi-core processors
       and GPU accelerators. We showcase some of the features added to Arbor
@@ -74,9 +74,9 @@ labels = arb.label_dict({
         \end{column}
 
         \begin{column}{0.33\textwidth}
-          \circled{2} Arbor will keep number the branches of the cells automatically. In Arbor a branch is a region between branching points, starting at the proximal point {\color{red}\circled{-}} of the first segment (usually the soma). For this cell, Arbor generates {\color{mediumslateblue}\circled{6}} branches.
+          \circled{2} Arbor will number the branches of cells automatically. In Arbor a branch is a region between branching points, starting at the proximal point {\color{red}\circled{-}} of the first segment (usually the soma). For this cell, Arbor generates {\color{mediumslateblue}\circled{6}} branches.
           \newline
-          
+
           Let's define a region to which we want to add certain properties. We take two points {\color{black}\circled{-}} on the dendrite: one 80\% along branch 1 and the other 30\% along branch 2.
           \begin{center}\includegraphics[width=0.8\linewidth]{scripts/branches.pdf}\end{center}
         \end{column}
@@ -181,7 +181,7 @@ cell.paint('roi', 'hh')
     \begin{column}{.49\linewidth}
       \textbf{\structure{Conclusion and Outlook}}\\
       We show that Arbor is a capable, ergonomic and highly
-      performant tool for building simulations of bio-physically detailled
+      performant tool for building simulations of bio-physically detailed
       neurons.
 
       We are working actively to further improve Arbor:
