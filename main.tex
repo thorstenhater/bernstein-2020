@@ -25,7 +25,6 @@
   \frametitle{\includegraphics[width=\linewidth]{img/arbor-lines-proto-colour-full}}
   \framesubtitle{A morphologically detailed neural network simulation library for modern high performance computer architectures.\\
     \tiny{Nora Abi Akar, Ben Cumming, Stuart Yates (CSCS); Thorsten Hater, Brent Huisman, Anne Küsters (Forschungszentrum Jülich)}}
-
   \begin{columns}
     \begin{column}{0.65\textwidth}
       We present recent developments in Arbor, a library for the simulation of
@@ -111,6 +110,7 @@
       clear semantics for handling the soma.
     \end{column}
   \end{columns}
+  \vspace*{5ex}
   \textbf{{\large\structure{Running an Allen Brain Atlas Model}}}\\
   The code snippet on the right is complete except the parsing and plotting
   steps; it is available in full together with this poster~\cite{my-source}.
@@ -132,10 +132,6 @@
           \item current clamp; rectangular stimulus of $150\,pA$ from $200\,ms$ to $1200\,ms$
           \item spike detector; triggering at $V=-40\,mV$
           \item voltage probe; sampling with $200\,kHz$
-          %\footnote{This is added to %NB: this screws up layout big time :(
-          %  the simulation, as it is a passive measurement device. Both spike
-          %  current clamps and detectors (via emitting events) potentially
-          %  change the model evolution.}
         \end{itemize}
         \item[\circled{6}] convert the cell description into a runnable simulation
         \item[\circled{7}] set mechanism catalogue comprising the defaults and Allen DB mechanisms.
@@ -167,16 +163,13 @@
       \textbf{\structure{Conclusion and Outlook}}\\
       The status quo shows that Arbor is a capable, ergonomic and highly
       performant tool for building simulations of bio-physically detailled
-      neurons.
-
-      We are working actively to further improve Arbor:
+      neurons. We are working actively to further improve Arbor:
       \begin{itemize}
         \item support for computation of local field potentials (LFP)
         \item coupling with other simulators such as Nest
         \item support for NeuroML and Neurolucida cell descriptions
         \item streamlined NMODL mechanism integration without re-compilation
       \end{itemize}
-
       \textbf{\structure{Acknowledgements}}\\
       This research has received funding from the European Union's Horizon 2020
       Framework Programme for Research and Innovation under the Specific Grant
@@ -186,6 +179,7 @@
     \begin{column}{.49\linewidth}
       \textbf{\structure{References}}\\
       \printbibliography{}
+      \vfill
     \end{column}
   \end{columns}
 \end{frame}
