@@ -86,11 +86,11 @@ labels = arb.label_dict({
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 labels['roi'] = '(proximal_interval (sum (location 1 0.8) (location 2 0.3)))'
 \end{minted}
-          Later, we instruct Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' regio:
+          \begin{center}\includegraphics[width=0.8\linewidth]{scripts/region.pdf}\end{center}
+          Later, we can instruct Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' region:
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 cell.paint('roi', 'hh')
 \end{minted}
-          \begin{center}\includegraphics[width=0.8\linewidth]{scripts/region.pdf}\end{center}
         \end{column}
 
       \end{columns}
