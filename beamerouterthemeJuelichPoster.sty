@@ -9,17 +9,17 @@
 % Logo
 %------------------------------------------------
 % Die Höhe des Logos beträgt bei Standardformaten 8% der Höhe
-% bzw. Breite der kurzen Formatseite 
+% bzw. Breite der kurzen Formatseite
 \ifnum\paperheight>\paperwidth
   % Hochformat  =>  Logo-Höhe = 8% der Papierbreite
   \setlength\JuelichPosterLogoHeight{0.08\paperwidth}
-  \setlength\JuelichPosterY{0.05\paperwidth}
+  \setlength\JuelichPosterY{0.03\paperwidth}
 \else
   % Querformat  =>  Logo-Höhe = 8% der Papierhöhe
   \setlength\JuelichPosterLogoHeight{0.08\paperheight}
-  \setlength\JuelichPosterY{0.05\paperheight}
+  \setlength\JuelichPosterY{0.03\paperheight}
 \fi
-  
+
 \ifdim\JuelichPosterLogoHeight<\JuelichPosterMinimumLogoHeight
   \setlength\JuelichPosterLogoHeight\JuelichPosterMinimumLogoHeight
 \fi
@@ -46,7 +46,7 @@
 }
 
 %------------------------------------------------
-% Helmholtz Banner 
+% Helmholtz Banner
 %------------------------------------------------
 \defbeamertemplate*{helmholtz banner}{}{\translate{HelmholtzBanner}}
 \defbeamertemplate*{footline}{JuelichPoster}
@@ -110,7 +110,7 @@
         \vfil%
         \if@tempswa\else\csname beamer@fte\endcsname\fi%
         \strut{\usebeamerfont{frametitle}%
-          \scalebox{1.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
+          \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
                          % width of title-line / scalingfactor
                          % 0.97tempdima / 1.8 = 0.54tempdima
         \strut\par%
@@ -120,7 +120,7 @@
             {\vskip1ex%
              \usebeamerfont{framesubtitle}%
              \usebeamercolor[fg]{framesubtitle}%
-             \scalebox{1.8}{\parbox{0.54\@tempdima}{\insertframesubtitle}}%
+             \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframesubtitle}}%
                             % width of subtitle-line / scalingfactor
                             % 0.97tempdima / 1.8 = 0.54tempdima
              \strut\par}%
@@ -135,7 +135,7 @@
       \vskip1ex%
       \if@tempswa\else\csname beamer@fte\endcsname\fi%
       \strut{\usebeamerfont{frametitle}%
-        \scalebox{1.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
+        \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
                        % width of title-line / scalingfactor
                        % 0.97tempdima / 1.8 = 0.54tempdima
       \strut\par%
@@ -145,7 +145,7 @@
         {\vskip1ex%
           \usebeamerfont{framesubtitle}%
           \usebeamercolor[fg]{framesubtitle}%
-          \scalebox{1.8}{\parbox{0.54\@tempdima}{\insertframesubtitle}}%
+          \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframesubtitle}}%
                          % width of subtitle-line / scalingfactor
                          % 0.97tempdima / 1.8 = 0.54tempdima
           \strut\par

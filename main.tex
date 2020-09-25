@@ -5,9 +5,7 @@
 \usepackage{tikz}
 
 \definecolor{lightgray}{gray}{0.9}
-\definecolor{lightred}{HTML}{ffc2c2}
 \definecolor{mediumslateblue}{HTML}{7B68EE}
-
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill,inner sep=2pt] (char) {\textcolor{white}{#1}};}} % chktex 36
 
 \usepackage[orientation=portrait,size=a1,scale=1.0]{beamerposter}
@@ -22,15 +20,16 @@
 \addbibresource{references.bib}
 
 \setbeamertemplate{partner1}{\includegraphics{img/cscs}}
+\setbeamertemplate{partner2}{\includegraphics{HBP_logo.jpg}}
 % TODO Add HBP and/or eBrains here
 
 \begin{document}
 \begin{frame}[t, fragile]
-  \frametitle{\includegraphics[width=\linewidth]{img/arbor-lines-proto-colour-full}}
+  \frametitle{\includegraphics[width=0.66\linewidth]{img/arbor-lines-proto-colour-full}}
   \framesubtitle{A morphologically detailed neural network simulation library for modern high performance computer architectures.\\
-    \tiny{Nora Abi Akar, Ben Cumming, Stuart Yates (CSCS); Thorsten Hater, Brent Huisman, Anne Küsters (Forschungszentrum Jülich)}}
+    \tiny{Nora Abi Akar, Ben Cumming, Stuart Yates (CSCS); Thorsten Hater, Brent Huisman, Anne Küsters (FZJ)}}
 
-  \begin{columns}
+  \begin{columns}[onlytextwidth,T]
     \begin{column}{0.65\textwidth}
       We present recent developments in Arbor, a library for the simulation of
       morphologically detailled neurons and networks thereof~\cite{arbor}. Arbor
@@ -54,56 +53,48 @@
       \end{block}
     \end{column}
   \end{columns}
-  \vspace*{5ex}
+  \vspace*{-2ex}
   \textbf{{\large\structure{New Features}}}\\
-  
+
   \textbf{\structure{Morphology}}\\
       Arbor provides a domain specific language (DSL) for describing regions and locations on morphologies, and a dictionary for associating these descriptions with a string label. The labels are used to refer to regions and locations when setting cell properties and attributes. For example, the membrane capacitance on a region of the cell membrane, or the location of synapse instances.
       \newline
-      
-      \begin{columns}
-        \begin{column}{0.49\textwidth}
-          \circled{1} We're loading a 10 segment cell from an \emph{.swc} file. In this file, segments are tagged 1, 2 or 3 which correspond the soma (red), an axon (grey) and a dendrite (blue). Arbor let's us label these regions as follows:
+
+      \begin{columns}[onlytextwidth,T]
+
+        \begin{column}{0.33\textwidth}
+          \circled{1} We're loading a 10 segment cell from an \emph{.swc} file. In this file, segments are tagged 1, 2 or 3, which correspond the soma (red), an axon (grey) and a dendrite (blue). We label these regions as follows:
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 labels = arb.label_dict({
 'soma': '(tag 1)',
 'axon': '(tag 2)',
 'dend': '(tag 3)'})
 \end{minted}
+          \begin{center}\includegraphics[width=0.8\linewidth]{scripts/morph.pdf}\end{center}
         \end{column}
-        \begin{column}{0.49\textwidth}
+
+        \begin{column}{0.33\textwidth}
           \circled{2} Arbor will keep number the branches of the cells automatically. In Arbor a branch is a region between branching points, starting at the proximal point {\color{red}\circled{-}} of the first segment (usually the soma). For this cell, Arbor generates {\color{mediumslateblue}\circled{6}} branches.
-          
+
           In this cell, branch 1 tapers from 0.4 to 0.2 $\mu$m and branch 2 has a constant radius of 0.5 $\mu$m. Let's take two points {\color{black}\circled{-}} on the dendrite: one 80\% along branch 1 and the other 30\% along branch 2.
+          \begin{center}\includegraphics[width=0.8\linewidth]{scripts/branches.pdf}\end{center}
         \end{column}
-      \end{columns}
-      
-      \begin{columns}
-        \begin{column}{0.49\textwidth}
-          \begin{center}\includegraphics[width=0.5\linewidth]{scripts/morph.pdf}\end{center}
-        \end{column}
-        \begin{column}{0.49\textwidth}
-          \begin{center}\includegraphics[width=0.5\linewidth]{scripts/branches.pdf}\end{center}
-        \end{column}
-      \end{columns}
-      
-      \begin{columns}
-        \begin{column}{0.49\textwidth}
-          \circled{3} The two points {\color{black}\circled{-}} and the proximal point of the soma {\color{red}\circled{-}} constrain an interval where we want to place specific dynamics. In Arbor, we can access this region by creating a label for the following region:
+
+        \begin{column}{0.3\textwidth}
+          \circled{3} The two points and the proximal point of the soma constrain an interval where we want to place specific dynamics. We can access this region by adding a new label:
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 labels['roi'] = '(proximal_interval (sum (location 1 0.8) (location 2 0.3)))'
 \end{minted}
-          Later, we could tell Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' regio:
+          Later, we instruct Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' regio:
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 cell.paint('roi', 'hh')
 \end{minted}
+          \begin{center}\includegraphics[width=0.8\linewidth]{scripts/region.pdf}\end{center}
         \end{column}
-        \begin{column}{0.49\textwidth}
-          \begin{center}\includegraphics[width=0.5\linewidth]{scripts/region.pdf}\end{center}
-        \end{column}
+
       \end{columns}
-  
-  \begin{columns}[onlytextwidth]
+
+  \begin{columns}[onlytextwidth,T]
     \begin{column}{.49\linewidth}
       \textbf{\structure{Mechanism Catalogues}}\\
       We provide an interface to collections of \emph{mechanisms} which describe
@@ -120,7 +111,7 @@ cell.paint('roi', 'hh')
       accessed in the simulation to provide the mechanisms used in the
       respective model. Further, they can be composed into larger catalogues,
       where name clashes are avoided via an
-      optional prefix.\\[1.5ex]
+      optional prefix.
     \end{column}
     \begin{column}{.49\linewidth}
       \textbf{\structure{Spherical Somata}}\\
@@ -134,15 +125,15 @@ cell.paint('roi', 'hh')
       directly to the surface, support for these detached segments was added. As
       a by-product, this change significantly simplified the associated program
       code. We offer specialised loaders for different flavours of SWC with
-      clear semantics for handling the soma.\\[1.5ex]
-    \end{column}
+      clear semantics for handling the soma.
+    \end{column}\\[2.5ex]
   \end{columns}
   \textbf{{\large\structure{Running an Allen Brain Atlas Model}}}\\
   The code snippet on the right is complete except the parsing and plotting
   steps; it is available in full together with this poster~\cite{my-source}.
   While the electro-physiological data is supplied as a JSON file for all
   models, the structure has some variation, precluding standardised setup.
-  \begin{columns}[onlytextwidth]
+  \begin{columns}[T]
     \begin{column}{.49\linewidth}
       \begin{itemize}
         \item[\circled{1}] load SWC structure from the download
@@ -187,8 +178,8 @@ cell.paint('roi', 'hh')
       \inputminted[bgcolor=lightgray,escapeinside=!!]{python}{src/model.py}
     \end{column}
   \end{columns}
-  \vspace*{5ex}
-  \begin{columns}[onlytextwidth]
+%   \vspace*{2.5ex}
+  \begin{columns}[T]
     \begin{column}{.49\linewidth}
       \textbf{\structure{Conclusion and Outlook}}\\
       The status quo shows that Arbor is a capable, ergonomic and highly
@@ -202,17 +193,17 @@ cell.paint('roi', 'hh')
         \item support for NeuroML and Neurolucida cell descriptions
         \item streamlined NMODL mechanism integration without re-compilation
       \end{itemize}
-
-      \textbf{\structure{Acknowledgements}}\\
-      This research has received funding from the European Union's Horizon 2020
-      Framework Programme for Research and Innovation under the Specific Grant
-      Agreements No.\,720270 (HBP SGA1), No.\,785907 (HBP SGA2), and No.\,945539
-      (HBP SGA3).\\[1.5ex]
     \end{column}
     \begin{column}{.49\linewidth}
       \textbf{\structure{References}}\\
       \printbibliography{}
     \end{column}
   \end{columns}
+
+      \textbf{\structure{Acknowledgements}}\\
+      This research has received funding from the European Union's Horizon 2020
+      Framework Programme for Research and Innovation under the Specific Grant
+      Agreements No.\,720270 (HBP SGA1), No.\,785907 (HBP SGA2), and No.\,945539
+      (HBP SGA3).\\[1.5ex]
 \end{frame}
 \end{document}
