@@ -21,15 +21,15 @@ def dataframe_line_plot(input_csv, output_svg):
 # ############################################
 #
 
-def translate(x, f, xshift):
-    return (f*x[0]+xshift, -f*x[1])
+def translate(x, f, xshift, yshift=0):
+    return (f*x[0]+xshift, -f*x[1]+yshift)
 
 def translate_all(points, f, xshift):
     return [translate(x, f, xshift) for x in points]
 
 # Draw one or more morphologies, side by side.
 # Each morphology can be drawn as segments or branches.
-def morph_image(morphs, methods, filename, sc=5):
+def morph_image(morphs, methods, filename, locset=[], sc=5):
     assert(len(morphs)==len(methods))
 
     print('generating:', filename)
@@ -96,7 +96,7 @@ def morph_image(morphs, methods, filename, sc=5):
                     lines.add(dwg.polygon(points=translate_all(line, sc, offset),
                                           fill=branchfillcolor))
 
-                pos = translate(branch.location(0.5), sc, offset)
+                pos = translate(branch.location(0.5), sc, offset,10)
                 points.add(dwg.circle(center=pos,
                                       stroke=bcolor,
                                       r=sc*1.4,
@@ -110,6 +110,23 @@ def morph_image(morphs, methods, filename, sc=5):
                                       insert=label_pos,
                                       stroke='white',
                                       fill='white'))
+
+            for l in range(len(locset)):
+                lab = locset[l]
+
+                # Draw the root
+                root = translate(morph[0].location(0), sc, offset)
+                points.add(dwg.circle(center=root, stroke='red', r=sc*0.5, fill='red'))
+
+                if lab['type'] == 'locset':
+                    for loc in lab['value']:
+                        bid = loc[0]
+                        pos = loc[1]
+
+                        loc = translate(morph[bid].location(pos), sc, offset)
+                        points.add(dwg.circle(center=loc, stroke='black', r=sc*0.5, fill='black'))
+
+
         offset = maxx - minx + sc
 
 
@@ -183,11 +200,11 @@ def label_image(morphology, labels, filename, sc=20):
                                       fill=branchfillcolor,
                                       stroke=branchfillcolor))
 
-        # Draw the root
-        root = translate(morph[0].location(0), sc, offset)
-        points.add(dwg.circle(center=root, stroke='red', r=sc/2.5, fill='white'))
-
         if lab['type'] == 'locset':
+            # Draw the root
+            root = translate(morph[0].location(0), sc, offset)
+            points.add(dwg.circle(center=root, stroke='red', r=sc/2.5, fill='white'))
+
             for loc in lab['value']:
                 bid = loc[0]
                 pos = loc[1]
@@ -227,11 +244,11 @@ def label_image(morphology, labels, filename, sc=20):
 
 def generate(path=''):
 
-    morph_image([inputs.label_morph, inputs.label_morph], ['segments', 'branches'], path+'/morph_branches.svg')
-    label_image(inputs.label_morph, [inputs.ls_proxint_in, inputs.reg_proxintinf], path+'/points_region.svg')
+    # morph_image([inputs.label_morph, inputs.label_morph], ['segments', 'branches'], path+'/morph_branches.svg')
+    # label_image(inputs.label_morph, [inputs.ls_proxint_in, inputs.reg_proxintinf], path+'/points_region.svg')
     morph_image([inputs.label_morph], ['segments'], path+'/morph.svg')
-    morph_image([inputs.label_morph], ['branches'], path+'/branches.svg')
-    label_image(inputs.label_morph, [inputs.ls_proxint_in], path+'/points.svg')
+    morph_image([inputs.label_morph], ['branches'], path+'/branches.svg',[inputs.ls_proxint_in])
+    # label_image(inputs.label_morph, [inputs.ls_proxint_in], path+'/points.svg')
     label_image(inputs.label_morph, [inputs.reg_proxintinf], path+'/region.svg')
 
 if __name__ == '__main__':
