@@ -98,6 +98,7 @@
 %------------------------------------------------
 \defbeamertemplate*{frametitle}{JuelichPoster}%
 {%
+  \vspace*{2.5ex}
   \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
   \@tempdima=\textwidth%
   \advance\@tempdima by\beamer@leftmargin%
@@ -109,7 +110,7 @@
       {%
         \vfil%
         \if@tempswa\else\csname beamer@fte\endcsname\fi%
-        \strut{\usebeamerfont{frametitle}%
+        \strut{\vspace*{2.5ex}\usebeamerfont{frametitle}%
           \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
                          % width of title-line / scalingfactor
                          % 0.97tempdima / 1.8 = 0.54tempdima
@@ -134,7 +135,7 @@
                            wd=\the\@tempdima]{frametitle}
       \vskip1ex%
       \if@tempswa\else\csname beamer@fte\endcsname\fi%
-      \strut{\usebeamerfont{frametitle}%
+      \strut{\vspace*{2.5ex}\usebeamerfont{frametitle}%
         \scalebox{2.8}{\parbox{0.54\@tempdima}{\insertframetitle}}}%
                        % width of title-line / scalingfactor
                        % 0.97tempdima / 1.8 = 0.54tempdima
