@@ -97,11 +97,11 @@ cell.paint('roi', 'hh')
     \begin{column}{.49\linewidth}
       \textbf{\structure{Mechanism Catalogues}}\\
       We provide an interface to collections of \emph{mechanisms} which describe
-      processes both associated with an area density, like ion channels and
+      processes both associated with an area, like ion channels and
       localised, like synapses. These mechanisms are described in the NMODL DSL
       and translated into plain or vectorised C++ and CUDA for execution on GPUs.
       In particular, we currently offer two catalogues. The first, \emph{default},
-      comprises basic functionality, such as a passive leak.
+      comprises basic functionality, such as a passive leak current.
       The second, \emph{allen}, is a collection of mechanisms
       obtained from the Allen Brain Atlas\cite{mouse-atlas}. We have carefully
       optimised these, as they form the basis for the V1 network model, which is
@@ -132,7 +132,7 @@ cell.paint('roi', 'hh')
   \begin{columns}[T]
     \begin{column}{.49\linewidth}
       \begin{itemize}
-        \item[\circled{1}] load SWC structure from the download
+        \item[\circled{1}] load SWC structure from a file
         \item[\circled{2}] assign labels to geometry
         \item[\circled{3}] build a cell description from labels and geometry
         \item[\circled{4}] parse the electro-physiological properties supplied in the download and assign to regions
@@ -140,7 +140,7 @@ cell.paint('roi', 'hh')
           \item set physical properties: $T$, $V_{m}$, $R_{a}$, $C_{m}$
           \item define ion dynamics and reversal potentials
         \end{itemize}
-        \item[\circled{5}] Attach to the soma's center
+        \item[\circled{5}] attach to the soma's center
         \begin{itemize}
           \item current clamp; rectangular stimulus of $150\,pA$ from $200\,ms$ to $1200\,ms$
           \item spike detector; triggering at $V=-40\,mV$
