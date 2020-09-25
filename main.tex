@@ -57,13 +57,13 @@
   \textbf{{\large\structure{New Features}}}\\
 
   \textbf{\structure{Morphology}}\\
-      Arbor provides a domain specific language (DSL) for describing regions and locations on morphologies, and a dictionary for associating these descriptions with a string label. The labels are used to refer to regions and locations when setting cell properties and attributes. For example, the membrane capacitance on a region of the cell membrane, or the location of synapse instances.
-      \newline
+      Arbor provides a domain specific language (DSL) for describing regions and locations on morphologies, and a dictionary for associating these descriptions with a string label. The labels are used to refer to regions and locations when setting cell properties and attributes. For example, the membrane capacitance on a region of the cell membrane, or the location of synapse instances. An example:
+  \vspace*{1ex}
 
       \begin{columns}[onlytextwidth,T]
 
         \begin{column}{0.33\textwidth}
-          \circled{1} We're loading a 10 segment cell from an \emph{.swc} file. In this file, segments are tagged 1, 2 or 3, which correspond the soma (pink), an axon (grey) and a dendrite (light blue). We label these regions as follows:
+          \circled{1} We're loading a 10 segment cell from an SWC file. In this file, the segments are tagged 1, 2 or 3, corresponding to the soma (pink), an axon (grey) and a dendrite (light blue) respectively. We label these regions as follows:
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 labels = arb.label_dict({
 'soma': '(tag 1)',
@@ -74,20 +74,18 @@ labels = arb.label_dict({
         \end{column}
 
         \begin{column}{0.33\textwidth}
-          \circled{2} Arbor will number the branches of cells automatically. In Arbor a branch is a region between branching points, starting at the proximal point {\color{red}\circled{-}} of the first segment (usually the soma). For this cell, Arbor generates {\color{mediumslateblue}\circled{6}} branches.
-          \newline
-
-          Let's define a region to which we want to add certain properties. We take two points {\color{black}\circled{-}} on the dendrite: one 80\% along branch 1 and the other 30\% along branch 2.
+          \circled{2} Arbor numbers branches of cells automatically. In Arbor a branch is a region between branching points, starting at the proximal point {\color{red}\circled{-}} of the first segment (usually the soma). For this cell, Arbor generates {\color{mediumslateblue}\circled{6}} branches.
           \begin{center}\includegraphics[width=0.8\linewidth]{scripts/branches.pdf}\end{center}
+          Let's define a region to which we want to add certain properties. We take two points {\color{black}\circled{-}} on the dendrite: one 80\% along branch 1 and the other 30\% along branch 2.
         \end{column}
 
         \begin{column}{0.3\textwidth}
-          \circled{3} The two points and the proximal point of the soma constrain an interval where we want to place specific dynamics. We can access this region by adding a new label:
+          \circled{3} The two points and the proximal point of the soma constrain an interval where we want to place specific dynamics. By adding a new label we can access this region later.
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 labels['roi'] = '(proximal_interval (sum (location 1 0.8) (location 2 0.3)))'
 \end{minted}
           \begin{center}\includegraphics[width=0.8\linewidth]{scripts/region.pdf}\end{center}
-          Later, we can instruct Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' region:
+          Now we can instruct Arbor to 'paint' Hodgkin–Huxley dynamics on the 'roi' region:
 \begin{minted}[bgcolor=lightgray,breaklines]{python}
 cell.paint('roi', 'hh')
 \end{minted}
