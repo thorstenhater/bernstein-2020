@@ -44,6 +44,7 @@
           \item[Contact] arbor-sim@fz-juelich.de
           \item[Source code] github.com/arbor-sim/arbor
           \item[Documentation] arbor.readthedocs.io
+          \item[Website] arbor-sim.github.io
         \end{description}
       \end{block}
     \end{column}
@@ -53,6 +54,29 @@
   \begin{columns}[onlytextwidth]
     \begin{column}{.49\linewidth}
       \textbf{\structure{Morphology}}\\
+      Arbor provides a domain specific language (DSL) for describing regions and locations on morphologies, and a dictionary for associating these descriptions with a string label. The labels are used to refer to regions and locations when setting cell properties and attributes. For example, the membrane capacitance on a region of the cell membrane, or the location of synapse instances.
+      \newline
+      
+      \begin{columns}
+        \begin{column}{0.44\textwidth}
+          We have a cell with a soma (red), axon (grey) and dendrite (blue). Arbor will keep track and number the branches of the cells you give it (furthest right). Branch 1 tapers from 0.4 to 0.2 $\mu$m and branch 2 has a constant radius of 0.5 $\mu$m.
+        \end{column}
+        \begin{column}{0.55\textwidth}
+        \includegraphics[width=\linewidth]{scripts/morph_branches.pdf}
+        \end{column}
+      \end{columns}
+      
+      \begin{columns}
+        \begin{column}{0.44\textwidth}
+          You have two points (black) on the dendrite (80\% along branch 1, 20\% along branch 2) which constrain an interval from the proximal point of the soma (red) where you want to place specific dynamics. In Arbor, you can access this region by creating a label for the following region:
+            \begin{minted}[]{lisp}
+            (proximal_interval (sum (location 1 0.8) (location 2 0.3)))
+            \end{minted}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+        \includegraphics[width=\linewidth]{scripts/points_region.pdf}
+        \end{column}
+      \end{columns}
     \end{column}
     \begin{column}{.49\linewidth}
       \textbf{\structure{Mechanism Catalogues}}\\

@@ -10,7 +10,11 @@
 *.vrb
 /_minted-main/
 /src/__pycache__/
+/src/*.pdf
+/scripts/__pycache__/
+/scripts/*.svg
 *.bbl
 *.bcf
 *.blg
 /main.run.xml
+/main.pdf
