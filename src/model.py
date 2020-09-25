@@ -32,6 +32,6 @@ model.probe('voltage', 'center', frequency=200000) # see !\circled{5}!
 # !\circled{7}! assign catalogues
 model.properties.catalogue = arb.allen_catalogue()
 model.properties.catalogue.extend(arb.default_catalogue(), '')
-# !\circled{8}! runx simulation and plot results
+# !\circled{8}! run simulation and plot results
 model.run(tfinal=1400, dt=0.005)
 utils.plot_results(model)
