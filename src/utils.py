@@ -80,10 +80,10 @@ def plot_results(model):
     ax.scatter(spikes, np.zeros_like(spikes) - 40, color=sns.color_palette()[1], zorder=20, label='Spike')
     ax.plot(times, voltages + 14.0, label='Arbor', zorder=15) # need to shift by junction potential, see allen db
     ax.plot(reference['t/ms'], 1000.0*reference['U/mV'], label='Reference', color='0.4', ls='--', zorder=10) # neuron outputs V instead of mV
-    ax.bar(200, 140, 1000, -120, align='edge', label='Stimulus', color='0.8')
+    ax.bar(200, 140, 1000, -120, align='edge', label='Stimulus', color='0.9')
     ax.set_xlabel('t/ms')
     ax.set_ylabel('U/mV')
     ax.set_xlim(left=0, right=1400)
-    ax.set_ylim(top=20, bottom=-100)
+    ax.set_ylim(top=20, bottom=-80)
     ax.legend(loc='upper left', bbox_to_anchor=(1.05, 1))
     plt.savefig("arbor.pdf", bbox_inches='tight')
